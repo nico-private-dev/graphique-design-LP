@@ -29,6 +29,8 @@
       width: 100%;
       max-width: 1200px;
       padding: 20px;
+      box-sizing: border-box; /* S'assurer que le padding est inclus dans la largeur */
+      overflow-x: hidden; /* Empêcher le scroll horizontal */
     }
 
     .hero-graph {
@@ -46,6 +48,7 @@
       left: 0;
       width: 100%;
       height: 100%;
+      animation: drawGrid 1.5s ease-in-out forwards;
     }
     
     .grid-line {
@@ -75,99 +78,110 @@
       border-radius: 50%;
       transform: translate(-50%, -50%);
       z-index: 2;
+      opacity: 0;
+      animation: scaleIn 0.5s ease-out forwards;
     }
     
     /* Points spécifiques */
     .point-1 {
       left: calc(var(--grid-size) * 0.5 + var(--half-grid));
       top: calc(var(--grid-size) * 2);
+      animation-delay: 0.2s;
     }
     
     .point-2 {
       left: calc(var(--grid-size) * 1.5 + var(--half-grid));
       top: calc(var(--grid-size) * 1);
+      animation-delay: 0.4s;
     }
     
     .point-3 {
       left: calc(var(--grid-size) * 2.5 + var(--half-grid));
       top: calc(var(--grid-size) * 2);
+      animation-delay: 0.6s;
     }
     
     .point-4 {
       left: calc(var(--grid-size) * 3.5 + var(--half-grid));
       top: calc(var(--grid-size) * 1);
+      animation-delay: 0.8s;
     }
     
     .point-5 {
       left: calc(var(--grid-size) * 4.5 + var(--half-grid));
       top: calc(var(--grid-size) * 2);
+      animation-delay: 1.0s;
     }
     
     .point-6 {
       left: calc(var(--grid-size) * 5.5 + var(--half-grid));
       top: calc(var(--grid-size) * 1.5 - var(--half-grid));
+      animation-delay: 1.2s;
     }
     
     .point-7 {
       left: calc(var(--grid-size) * 6.5 + var(--half-grid));
       top: calc(var(--grid-size) * 0.5 - var(--half-grid));
+      animation-delay: 1.4s;
     }
     
     /* Lignes du graphique */
     .line {
       position: absolute;
-      height: 3px;
+      height: 2px;
       background-color: var(--graph-color);
       transform-origin: 0 0;
       z-index: 1;
+      width: 0; /* Largeur initiale à 0 */
+      animation: drawLine 0.8s ease-in-out forwards;
     }
     
     /* Ligne 1: Point 1 à Point 2 */
     .line-1 {
       left: calc(var(--grid-size) * 0.5 + var(--half-grid));
       top: calc(var(--grid-size) * 2);
-      width: 212px;
       transform: rotate(-45deg);
+      animation-delay: 0.3s;
     }
     
     /* Ligne 2: Point 2 à Point 3 */
     .line-2 {
       left: calc(var(--grid-size) * 1.5 + var(--half-grid));
       top: calc(var(--grid-size) * 1);
-      width: 212px;
       transform: rotate(45deg);
+      animation-delay: 0.5s;
     }
     
     /* Ligne 3: Point 3 à Point 4 */
     .line-3 {
       left: calc(var(--grid-size) * 2.5 + var(--half-grid));
       top: calc(var(--grid-size) * 2);
-      width: 212px;
       transform: rotate(-45deg);
+      animation-delay: 0.7s;
     }
     
     /* Ligne 4: Point 4 à Point 5 */
     .line-4 {
       left: calc(var(--grid-size) * 3.5 + var(--half-grid));
       top: calc(var(--grid-size) * 1);
-      width: 212px;
       transform: rotate(45deg);
+      animation-delay: 0.9s;
     }
     
     /* Ligne 5: Point 5 à Point 6 */
     .line-5 {
         left: calc(var(--grid-size) * 4.5 + var(--half-grid));
         top: calc(var(--grid-size) * 2);
-        width: 212px;
         transform: rotate(-45deg);
+        animation-delay: 1.1s;
     }
         
     /* Ligne 6: Point 6 à Point 7 */
     .line-6 {
       left: calc(var(--grid-size) * 5.5 + var(--half-grid));
       top: calc(var(--grid-size) * 1.5 - var(--half-grid));
-      width: 212px;
       transform: rotate(-45deg);
+      animation-delay: 1.3s;
     }
     
     /* Étiquettes */
@@ -181,16 +195,63 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       z-index: 10;
       transform: translateY(-50%);
+      opacity: 0;
+      animation: slideInLabel 0.6s ease-out forwards;
     }
 
     .label.avant {
       left: calc(var(--grid-size) * 0.5 + var(--half-grid));
       top: calc(var(--grid-size) * 2);
+      animation-delay: 1.5s;
     }
 
     .label.apres {
       right: calc(var(--grid-size) * 0.5);
       top: calc(var(--grid-size) * 0.5 - var(--half-grid));
+      animation-delay: 1.6s;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes drawLine {
+      from { width: 0; }
+      to { width: 212px; }
+    }
+    
+    @keyframes drawLineResponsive {
+      from { width: 0; }
+      to { width: 100px; }
+    }
+    
+    @keyframes drawGrid {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes scaleIn {
+      from { 
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+      }
+      to { 
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes slideInLabel {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
     @media (max-width: 768px) {
@@ -202,6 +263,12 @@
       
       .hero-graph {
         height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        padding: 0 var(--grid-size);
+        box-sizing: border-box;
       }
       
       .label {
@@ -214,28 +281,79 @@
         display: none;
       }
       
+      /* Ajuster le conteneur de la grille pour un meilleur centrage */
+      .grid {
+        left: 0;
+        transform: none;
+        width: 100%;
+      }
+      
+      /* Décaler tous les points d'une case en bas et à gauche */
+      .point-1 {
+        left: calc(50% - var(--grid-size) * 2);
+        top: calc(var(--grid-size) * 3);
+      }
+      
+      .point-2 {
+        left: calc(50% - var(--grid-size));
+        top: calc(var(--grid-size) * 2);
+      }
+      
+      .point-3 {
+        left: calc(50%);
+        top: calc(var(--grid-size) * 3);
+      }
+      
+      .point-4 {
+        left: calc(50% + var(--grid-size));
+        top: calc(var(--grid-size) * 2);
+      }
+      
       /* Repositionner le point 5 en diagonale supérieure du point 4 */
       .point-5 {
-        left: calc(var(--grid-size) * 4.5 + var(--half-grid));
-        top: calc(var(--grid-size) * 0.5 - var(--half-grid));
+        left: calc(50% + var(--grid-size) * 2);
+        top: calc(var(--grid-size) * 1.5 - var(--half-grid));
       }
       
-      /* Ajuster la ligne 4 pour connecter le point 4 au nouveau point 5 */
-      .line-4 {
-        left: calc(var(--grid-size) * 3.5 + var(--half-grid));
-        top: calc(var(--grid-size) * 1);
-        width: 100px;
+      /* Ajuster les lignes pour connecter les points décalés */
+      .line-1 {
+        left: calc(50% - var(--grid-size) * 2);
+        top: calc(var(--grid-size) * 3);
         transform: rotate(-45deg);
-      }
-
-      .line-1, .line-2, .line-3, .line-4, .line-5 {
-        width: 100px;
+        animation: drawLineResponsive 0.8s ease-in-out forwards;
       }
       
-      /* Repositionner l'étiquette APRÈS près du point 5 */
+      .line-2 {
+        left: calc(50% - var(--grid-size));
+        top: calc(var(--grid-size) * 2);
+        transform: rotate(45deg);
+        animation: drawLineResponsive 0.8s ease-in-out forwards;
+      }
+      
+      .line-3 {
+        left: calc(50%);
+        top: calc(var(--grid-size) * 3);
+        transform: rotate(-45deg);
+        animation: drawLineResponsive 0.8s ease-in-out forwards;
+      }
+      
+      .line-4 {
+        left: calc(50% + var(--grid-size));
+        top: calc(var(--grid-size) * 2);
+        transform: rotate(-45deg);
+        animation: drawLineResponsive 0.8s ease-in-out forwards;
+      }
+      
+      /* Repositionner les étiquettes */
+      .label.avant {
+        left: calc(50% - var(--grid-size) * 2);
+        top: calc(var(--grid-size) * 3);
+      }
+      
       .label.apres {
-        right: calc(var(--grid-size) * 0.5);
-        top: calc(var(--grid-size) * 0.5 - var(--half-grid));
+        right: auto;
+        left: calc(50% + var(--grid-size) * 2);
+        top: calc(var(--grid-size) * 1.5 - var(--half-grid));
       }
     }
     
@@ -300,28 +418,111 @@
     const height = graphContainer.offsetHeight;
     
     // Nombre de cellules dans la grille
-    const cols = Math.ceil(width / gridSize);
+    let cols = Math.ceil(width / gridSize);
     const rows = Math.ceil(height / gridSize);
     
-    // Créer les lignes horizontales de la grille (sauf les bordures)
-    for (let i = 1; i < rows; i++) {
-      const line = document.createElement('div');
-      line.className = 'grid-line grid-line-horizontal';
-      line.style.top = (i * gridSize) + 'px';
-      gridContainer.appendChild(line);
-    }
-    
-    // Créer les lignes verticales de la grille (sauf les bordures)
-    for (let i = 1; i < cols; i++) {
-      const line = document.createElement('div');
-      line.className = 'grid-line grid-line-vertical';
-      line.style.left = (i * gridSize) + 'px';
-      gridContainer.appendChild(line);
+    // En version mobile, réduire d'une colonne
+    if (window.innerWidth <= 768) {
+      cols = cols - 1;
+      
+      // Ajuster la position des lignes verticales pour s'aligner avec les points
+      const offsetX = (width - (cols - 1) * gridSize) / 2;
+      
+      // Créer les lignes horizontales de la grille (sauf les bordures)
+      for (let i = 1; i < rows; i++) {
+        const line = document.createElement('div');
+        line.className = 'grid-line grid-line-horizontal';
+        line.style.top = (i * gridSize) + 'px';
+        // Ajouter un délai d'animation pour chaque ligne
+        line.style.animationDelay = (0.05 * i) + 's';
+        gridContainer.appendChild(line);
+      }
+      
+      // Créer les lignes verticales de la grille (sauf les bordures)
+      for (let i = 0; i < cols; i++) {
+        const line = document.createElement('div');
+        line.className = 'grid-line grid-line-vertical';
+        line.style.left = (offsetX + i * gridSize) + 'px';
+        // Ajouter un délai d'animation pour chaque ligne
+        line.style.animationDelay = (0.05 * (i + rows)) + 's';
+        gridContainer.appendChild(line);
+      }
+    } else {
+      // Créer les lignes horizontales de la grille (sauf les bordures)
+      for (let i = 1; i < rows; i++) {
+        const line = document.createElement('div');
+        line.className = 'grid-line grid-line-horizontal';
+        line.style.top = (i * gridSize) + 'px';
+        // Ajouter un délai d'animation pour chaque ligne
+        line.style.animationDelay = (0.05 * i) + 's';
+        gridContainer.appendChild(line);
+      }
+      
+      // Créer les lignes verticales de la grille (sauf les bordures)
+      for (let i = 1; i < cols; i++) {
+        const line = document.createElement('div');
+        line.className = 'grid-line grid-line-vertical';
+        line.style.left = (i * gridSize) + 'px';
+        // Ajouter un délai d'animation pour chaque ligne
+        line.style.animationDelay = (0.05 * (i + rows)) + 's';
+        gridContainer.appendChild(line);
+      }
     }
   }
 
+  // Fonction pour réinitialiser les animations lors du scroll
+  function handleIntersection(entries, observer) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Réinitialiser les animations en retirant et réappliquant les classes
+        const graph = entry.target;
+        const points = graph.querySelectorAll('.graph-point');
+        const lines = graph.querySelectorAll('.line');
+        const labels = graph.querySelectorAll('.label');
+        const gridLines = graph.querySelectorAll('.grid-line');
+        
+        // Réinitialiser l'opacité et les styles pour une nouvelle animation
+        points.forEach(point => {
+          point.style.animation = 'none';
+          point.offsetHeight; // Force reflow
+          point.style.animation = '';
+        });
+        
+        lines.forEach(line => {
+          line.style.animation = 'none';
+          line.offsetHeight; // Force reflow
+          line.style.animation = '';
+        });
+        
+        labels.forEach(label => {
+          label.style.animation = 'none';
+          label.offsetHeight; // Force reflow
+          label.style.animation = '';
+        });
+        
+        gridLines.forEach(gridLine => {
+          gridLine.style.animation = 'none';
+          gridLine.offsetHeight; // Force reflow
+          gridLine.style.animation = '';
+        });
+      }
+    });
+  }
+
   // Générer la grille au chargement
-  document.addEventListener('DOMContentLoaded', generateGrid);
+  document.addEventListener('DOMContentLoaded', function() {
+    generateGrid();
+    
+    // Configurer l'Intersection Observer pour déclencher l'animation quand le graphique est visible
+    const observer = new IntersectionObserver(handleIntersection, {
+      root: null,
+      threshold: 0.2 // Déclenche quand 20% du graphique est visible
+    });
+    
+    // Observer le graphique
+    const graph = document.querySelector('.hero-graph');
+    observer.observe(graph);
+  });
   
   // Recalculer lors du redimensionnement avec debounce pour optimiser les performances
   let resizeTimer;
