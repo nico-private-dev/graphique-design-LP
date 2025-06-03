@@ -6,11 +6,12 @@
   <title>Graphique Avant / Après</title>
   <style>
     :root {
-      --grid-size: 75px;
+      --grid-size: 150px;
       --graph-color: #330CFD;
       --point-size: 16px;
       --grid-color: rgba(0, 0, 255, 0.1);
       --background-color: #f5f5f5;
+      --half-grid: 75px;
     }
     
     body {
@@ -33,10 +34,9 @@
     .hero-graph {
       position: relative;
       width: 100%;
-      height: 300px;
+      height: 450px;
       margin: 0 auto;
       background-color: var(--background-color);
-      overflow: hidden;
     }
     
     /* Grille */
@@ -46,41 +46,23 @@
       left: 0;
       width: 100%;
       height: 100%;
-      display: grid;
     }
     
-    .grid-horizontal,
-    .grid-vertical {
+    .grid-line {
       position: absolute;
       background-color: var(--grid-color);
     }
     
-    .grid-horizontal {
+    .grid-line-horizontal {
       height: 1px;
-      width: 100%;
-      left: 0;
+      width: calc(100% - 2px);
+      left: 1px;
     }
     
-    .grid-vertical {
+    .grid-line-vertical {
       width: 1px;
-      height: 100%;
-      top: 0;
-    }
-    
-    /* Ligne du graphique */
-    .graph-line {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    
-    .line-segment {
-      position: absolute;
-      height: 3px;
-      background-color: var(--graph-color);
-      transform-origin: left center;
+      height: calc(100% - 2px);
+      top: 1px;
     }
     
     /* Points du graphique */
@@ -93,6 +75,99 @@
       border-radius: 50%;
       transform: translate(-50%, -50%);
       z-index: 2;
+    }
+    
+    /* Points spécifiques */
+    .point-1 {
+      left: calc(var(--grid-size) * 0.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 2);
+    }
+    
+    .point-2 {
+      left: calc(var(--grid-size) * 1.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 1);
+    }
+    
+    .point-3 {
+      left: calc(var(--grid-size) * 2.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 2);
+    }
+    
+    .point-4 {
+      left: calc(var(--grid-size) * 3.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 1);
+    }
+    
+    .point-5 {
+      left: calc(var(--grid-size) * 4.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 2);
+    }
+    
+    .point-6 {
+      left: calc(var(--grid-size) * 5.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 1.5 - var(--half-grid));
+    }
+    
+    .point-7 {
+      left: calc(var(--grid-size) * 6.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 0.5 - var(--half-grid));
+    }
+    
+    /* Lignes du graphique */
+    .line {
+      position: absolute;
+      height: 3px;
+      background-color: var(--graph-color);
+      transform-origin: 0 0;
+      z-index: 1;
+    }
+    
+    /* Ligne 1: Point 1 à Point 2 */
+    .line-1 {
+      left: calc(var(--grid-size) * 0.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 2);
+      width: 212px;
+      transform: rotate(-45deg);
+    }
+    
+    /* Ligne 2: Point 2 à Point 3 */
+    .line-2 {
+      left: calc(var(--grid-size) * 1.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 1);
+      width: 212px;
+      transform: rotate(45deg);
+    }
+    
+    /* Ligne 3: Point 3 à Point 4 */
+    .line-3 {
+      left: calc(var(--grid-size) * 2.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 2);
+      width: 212px;
+      transform: rotate(-45deg);
+    }
+    
+    /* Ligne 4: Point 4 à Point 5 */
+    .line-4 {
+      left: calc(var(--grid-size) * 3.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 1);
+      width: 212px;
+      transform: rotate(45deg);
+    }
+    
+    /* Ligne 5: Point 5 à Point 6 */
+    .line-5 {
+        left: calc(var(--grid-size) * 4.5 + var(--half-grid));
+        top: calc(var(--grid-size) * 2);
+        width: 212px;
+        transform: rotate(-45deg);
+    }
+        
+    /* Ligne 6: Point 6 à Point 7 */
+    .line-6 {
+      left: calc(var(--grid-size) * 5.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 1.5 - var(--half-grid));
+      width: 212px;
+      transform: rotate(-45deg);
     }
     
     /* Étiquettes */
@@ -109,23 +184,24 @@
     }
 
     .label.avant {
-      left: calc(var(--grid-size) * 1);
-      top: calc(var(--grid-size) * 3);
+      left: calc(var(--grid-size) * 0.5 + var(--half-grid));
+      top: calc(var(--grid-size) * 2);
     }
 
     .label.apres {
-      right: calc(var(--grid-size) * 1);
-      top: calc(var(--grid-size) * 1);
+      right: calc(var(--grid-size) * 0.5);
+      top: calc(var(--grid-size) * 0.5 - var(--half-grid));
     }
     
     @media (max-width: 768px) {
       :root {
-        --grid-size: 50px;
+        --grid-size: 100px;
+        --half-grid: 50px;
         --point-size: 12px;
       }
       
       .hero-graph {
-        height: 250px;
+        height: 300px;
       }
       
       .label {
@@ -141,10 +217,24 @@
   <div class="hero-graph">
     <div class="grid" id="grid"></div>
     
-    <div class="graph-line" id="graph-line"></div>
+    <!-- Lignes du graphique -->
+    <div class="line line-1"></div>
+    <div class="line line-2"></div>
+    <div class="line line-3"></div>
+    <div class="line line-4"></div>
+    <div class="line line-5"></div>
+    <div class="line line-6"></div>
     
-    <div id="graph-points"></div>
+    <!-- Points du graphique -->
+    <div class="graph-point point-1"></div>
+    <div class="graph-point point-2"></div>
+    <div class="graph-point point-3"></div>
+    <div class="graph-point point-4"></div>
+    <div class="graph-point point-5"></div>
+    <div class="graph-point point-6"></div>
+    <div class="graph-point point-7"></div>
     
+    <!-- Étiquettes -->
     <div class="label avant">AVANT</div>
     <div class="label apres">APRÈS</div>
   </div>
@@ -153,10 +243,8 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const gridSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--grid-size'));
-    const graphContainer = document.querySelector('.hero-graph');
     const gridContainer = document.getElementById('grid');
-    const graphLine = document.getElementById('graph-line');
-    const pointsContainer = document.getElementById('graph-points');
+    const graphContainer = document.querySelector('.hero-graph');
     
     // Dimensions du conteneur
     const width = graphContainer.offsetWidth;
@@ -166,78 +254,27 @@
     const cols = Math.ceil(width / gridSize);
     const rows = Math.ceil(height / gridSize);
     
-    // Créer les lignes horizontales de la grille
-    for (let i = 0; i <= rows; i++) {
+    // Créer les lignes horizontales de la grille (sauf les bordures)
+    for (let i = 1; i < rows; i++) {
       const line = document.createElement('div');
-      line.className = 'grid-horizontal';
+      line.className = 'grid-line grid-line-horizontal';
       line.style.top = (i * gridSize) + 'px';
       gridContainer.appendChild(line);
     }
     
-    // Créer les lignes verticales de la grille
-    for (let i = 0; i <= cols; i++) {
+    // Créer les lignes verticales de la grille (sauf les bordures)
+    for (let i = 1; i < cols; i++) {
       const line = document.createElement('div');
-      line.className = 'grid-vertical';
+      line.className = 'grid-line grid-line-vertical';
       line.style.left = (i * gridSize) + 'px';
       gridContainer.appendChild(line);
     }
-    
-    // Points du graphique (coordonnées relatives à la grille)
-    const points = [
-      {x: 1, y: 3},
-      {x: 2, y: 1},
-      {x: 3, y: 3},
-      {x: 4, y: 1},
-      {x: 5, y: 3},
-      {x: 6, y: 2},
-      {x: 7, y: 1}
-    ];
-    
-    // Créer les points
-    points.forEach(point => {
-      const pointElement = document.createElement('div');
-      pointElement.className = 'graph-point';
-      pointElement.style.left = (point.x * gridSize) + 'px';
-      pointElement.style.top = (point.y * gridSize) + 'px';
-      pointsContainer.appendChild(pointElement);
-    });
-    
-    // Créer les segments de ligne
-    for (let i = 0; i < points.length - 1; i++) {
-      const start = points[i];
-      const end = points[i + 1];
-      
-      // Calculer la longueur et l'angle du segment
-      const dx = (end.x - start.x) * gridSize;
-      const dy = (end.y - start.y) * gridSize;
-      const length = Math.sqrt(dx * dx + dy * dy);
-      const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-      
-      // Créer le segment
-      const segment = document.createElement('div');
-      segment.className = 'line-segment';
-      segment.style.left = (start.x * gridSize) + 'px';
-      segment.style.top = (start.y * gridSize) + 'px';
-      segment.style.width = length + 'px';
-      segment.style.transform = `rotate(${angle}deg)`;
-      
-      graphLine.appendChild(segment);
-    }
-    
-    // Ajuster les positions des étiquettes
-    document.querySelector('.label.avant').style.left = (points[0].x * gridSize) + 'px';
-    document.querySelector('.label.avant').style.top = (points[0].y * gridSize) + 'px';
-    
-    document.querySelector('.label.apres').style.right = (cols - points[points.length - 1].x) * gridSize + 'px';
-    document.querySelector('.label.apres').style.top = (points[points.length - 1].y * gridSize) + 'px';
   });
   
   // Recalculer lors du redimensionnement
   window.addEventListener('resize', function() {
-    // Vider les conteneurs
+    // Vider le conteneur de la grille
     document.getElementById('grid').innerHTML = '';
-    document.getElementById('graph-line').innerHTML = '';
-    document.getElementById('graph-points').innerHTML = '';
     
     // Déclencher l'événement DOMContentLoaded pour recréer les éléments
     document.dispatchEvent(new Event('DOMContentLoaded'));
