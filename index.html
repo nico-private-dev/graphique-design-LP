@@ -269,6 +269,7 @@
         position: relative;
         padding: 0 var(--grid-size);
         box-sizing: border-box;
+        margin-top: -20px; /* Remonter légèrement le graphique */
       }
       
       .label {
@@ -291,69 +292,70 @@
       /* Décaler tous les points d'une case en bas et à gauche */
       .point-1 {
         left: calc(50% - var(--grid-size) * 2);
-        top: calc(var(--grid-size) * 3);
+        top: calc(var(--grid-size) * 3 - 15px); /* Remonter de 15px */
       }
       
       .point-2 {
         left: calc(50% - var(--grid-size));
-        top: calc(var(--grid-size) * 2);
+        top: calc(var(--grid-size) * 2 - 15px); /* Remonter de 15px */
       }
       
       .point-3 {
         left: calc(50%);
-        top: calc(var(--grid-size) * 3);
+        top: calc(var(--grid-size) * 3 - 15px); /* Remonter de 15px */
       }
       
       .point-4 {
         left: calc(50% + var(--grid-size));
-        top: calc(var(--grid-size) * 2);
+        top: calc(var(--grid-size) * 2 - 15px); /* Remonter de 15px */
       }
       
       /* Repositionner le point 5 en diagonale supérieure du point 4 */
       .point-5 {
         left: calc(50% + var(--grid-size) * 2);
-        top: calc(var(--grid-size) * 1.5 - var(--half-grid));
+        top: calc(var(--grid-size) * 1.5 - var(--half-grid) - 15px); /* Remonter de 15px */
       }
       
       /* Ajuster les lignes pour connecter les points décalés */
       .line-1 {
         left: calc(50% - var(--grid-size) * 2);
-        top: calc(var(--grid-size) * 3);
+        top: calc(var(--grid-size) * 3 - 15px); /* Remonter de 15px */
         transform: rotate(-45deg);
         animation: drawLineResponsive 0.8s ease-in-out forwards;
       }
       
       .line-2 {
         left: calc(50% - var(--grid-size));
-        top: calc(var(--grid-size) * 2);
+        top: calc(var(--grid-size) * 2 - 15px); /* Remonter de 15px */
         transform: rotate(45deg);
         animation: drawLineResponsive 0.8s ease-in-out forwards;
       }
       
       .line-3 {
         left: calc(50%);
-        top: calc(var(--grid-size) * 3);
+        top: calc(var(--grid-size) * 3 - 15px); /* Remonter de 15px */
         transform: rotate(-45deg);
         animation: drawLineResponsive 0.8s ease-in-out forwards;
       }
       
       .line-4 {
         left: calc(50% + var(--grid-size));
-        top: calc(var(--grid-size) * 2);
+        top: calc(var(--grid-size) * 2 - 15px); /* Remonter de 15px */
         transform: rotate(-45deg);
         animation: drawLineResponsive 0.8s ease-in-out forwards;
       }
       
       /* Repositionner les étiquettes */
       .label.avant {
-        left: calc(50% - var(--grid-size) * 2);
-        top: calc(var(--grid-size) * 3);
+        left: calc(50% - var(--grid-size) * 2.5);
+        top: calc(var(--grid-size) * 3 - 15px); /* Remonter de 15px */
       }
       
       .label.apres {
         right: auto;
         left: calc(50% + var(--grid-size) * 2);
-        top: calc(var(--grid-size) * 1.5 - var(--half-grid));
+        top: calc(var(--grid-size) * 1 - 15px); /* Ajusté pour être au-dessus du point 5 */
+        transform: translateY(-100%); /* Positionner au-dessus du point */
       }
     }
     
@@ -432,7 +434,8 @@
       for (let i = 1; i < rows; i++) {
         const line = document.createElement('div');
         line.className = 'grid-line grid-line-horizontal';
-        line.style.top = (i * gridSize) + 'px';
+        // Remonter légèrement les lignes horizontales (décalage de -15px)
+        line.style.top = ((i * gridSize) - 15) + 'px';
         // Ajouter un délai d'animation pour chaque ligne
         line.style.animationDelay = (0.05 * i) + 's';
         gridContainer.appendChild(line);
