@@ -208,6 +208,52 @@
         font-size: 12px;
         padding: 4px 8px;
       }
+      
+      /* Masquer les points 6 et 7 et les lignes correspondantes */
+      .point-6, .point-7, .line-5, .line-6 {
+        display: none;
+      }
+      
+      /* Repositionner le point 5 en diagonale supérieure du point 4 */
+      .point-5 {
+        left: calc(var(--grid-size) * 4.5 + var(--half-grid));
+        top: calc(var(--grid-size) * 0.5 - var(--half-grid));
+      }
+      
+      /* Ajuster la ligne 4 pour connecter le point 4 au nouveau point 5 */
+      .line-4 {
+        left: calc(var(--grid-size) * 3.5 + var(--half-grid));
+        top: calc(var(--grid-size) * 1);
+        width: 100px;
+        transform: rotate(-45deg);
+      }
+
+      .line-1, .line-2, .line-3, .line-4, .line-5 {
+        width: 100px;
+      }
+      
+      /* Repositionner l'étiquette APRÈS près du point 5 */
+      .label.apres {
+        right: calc(var(--grid-size) * 0.5);
+        top: calc(var(--grid-size) * 0.5 - var(--half-grid));
+      }
+    }
+    
+    @media (max-width: 480px) {
+      :root {
+        --grid-size: 70px;
+        --half-grid: 35px;
+        --point-size: 10px;
+      }
+      
+      .hero-graph {
+        height: 250px;
+      }
+      
+      .label {
+        font-size: 10px;
+        padding: 3px 6px;
+      }
     }
   </style>
 </head>
@@ -241,10 +287,13 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  function generateGrid() {
     const gridSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--grid-size'));
     const gridContainer = document.getElementById('grid');
     const graphContainer = document.querySelector('.hero-graph');
+    
+    // Vider le conteneur de la grille
+    gridContainer.innerHTML = '';
     
     // Dimensions du conteneur
     const width = graphContainer.offsetWidth;
@@ -269,15 +318,16 @@
       line.style.left = (i * gridSize) + 'px';
       gridContainer.appendChild(line);
     }
-  });
+  }
+
+  // Générer la grille au chargement
+  document.addEventListener('DOMContentLoaded', generateGrid);
   
-  // Recalculer lors du redimensionnement
+  // Recalculer lors du redimensionnement avec debounce pour optimiser les performances
+  let resizeTimer;
   window.addEventListener('resize', function() {
-    // Vider le conteneur de la grille
-    document.getElementById('grid').innerHTML = '';
-    
-    // Déclencher l'événement DOMContentLoaded pour recréer les éléments
-    document.dispatchEvent(new Event('DOMContentLoaded'));
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(generateGrid, 100);
   });
 </script>
 
